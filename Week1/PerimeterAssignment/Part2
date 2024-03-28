@@ -1,0 +1,79 @@
+import edu.duke.*;
+
+public class PerimeterRunner {
+    public double getPerimeter (Shape s) {
+        // Start with totalPerim = 0
+        double totalPerim = 0.0;
+        // Start wth prevPt = the last point 
+        Point prevPt = s.getLastPoint();
+        // For each point currPt in the shape,
+        for (Point currPt : s.getPoints()) {
+            // Find distance from prevPt point to currPt 
+            double currDist = prevPt.distance(currPt);
+            // Update totalPerim by currDist
+            totalPerim = totalPerim + currDist;
+            // Update prevPt to be currPt
+            prevPt = currPt;
+        }
+            // totalPerim is the answer
+        return totalPerim;
+    }
+
+    public int getNumPoints (Shape s) {
+         int SumNumPoints  = 0;
+         for (Point currPt : s.getPoints()) {
+         SumNumPoints = SumNumPoints + 1;
+         }
+    return SumNumPoints;
+    }
+     
+    public double getAverageLength (double l ,int s) {
+          double avg = l/s;
+          return avg;
+        }
+    public double getLargestSide(Shape s) {
+        double largestSide = 0;
+        Point prevPt = s.getLastPoint();
+        for (Point currPt : s.getPoints()) {
+            
+            double currDist = prevPt.distance(currPt);
+            if(currDist>largestSide)
+            {
+                largestSide = currDist;
+            }
+            prevPt = currPt;
+        }
+        return largestSide;
+            
+        }
+    public double getLargestX(Shape s) {
+        double LargestX = 0; 
+        for (Point currPt : s.getPoints()) {
+
+            if(currPt.getX()>LargestX)
+            {
+                LargestX = currPt.getX();
+            }
+        }
+        return LargestX;
+    }
+    public void testPerimeter () {
+        FileResource fr = new FileResource();
+        Shape s = new Shape(fr);
+        double length = getPerimeter(s);
+        int SumNumPoints_Var = getNumPoints(s);
+        double avg = getAverageLength(length,SumNumPoints_Var);
+        double largestSide = getLargestSide(s);
+        
+        System.out.println("perimeter = " + length);
+        System.out.println("TotalPoints = " + SumNumPoints_Var);
+        System.out.println("Average = " + avg);
+        System.out.println("LargestSide = " + largestSide);
+        System.out.println("LargestX = " + getLargestX(s));
+    }
+
+    public static void main (String[] args) {
+        PerimeterRunner pr = new PerimeterRunner();
+        pr.testPerimeter();
+    }
+}
