@@ -1,0 +1,68 @@
+import edu.duke.*;
+import java.io.File;
+
+public class Part3 {
+
+    public float cgRatio(String dna) {
+        int len = dna.length();
+        int cg = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (dna.charAt(i) == 'C' || dna.charAt(i) == 'G') {
+                cg++;
+            }
+        }
+        float cg_ratio = (float) cg / len;
+        return cg_ratio;
+    }
+
+    public void processGenes(StorageResource sr) {
+        // print all the Strings in sr that are longer than 9 characters
+        // print the Strings in sr whose C-G-ratio is higher than 0.35
+        // print the length of the longest gene in sr
+        int count = 0;
+        int count_cg = 0;
+        int long_str = 0;
+        for (String gene : sr.data()) {
+            if (gene.length() >= 9) {
+                System.out.println("Gene longer than 9 characters: " + gene);
+                count++;
+            }
+            if (cgRatio(gene) > 0.35) {
+                System.out.println("Gene whose C-G-ratio is higher than 0.35: " + gene);
+                count_cg++;
+            }
+            if (gene.length() > long_str) {
+                long_str = gene.length();
+            }
+        }
+        System.out.println("Total number of Gene longer than 9 characters: " + count);
+        System.out.println("Total number of Gene whose C-G-ratio is higher than 0.35: " + count_cg);
+        System.out.println("Length of longest string: " + long_str);
+    }
+
+    public void testProcessGenes(String dna) {
+        StorageResource sr1 = new StorageResource();
+        sr1.add("ATGCGCTAA"); // Gene longer than 9 characters
+        sr1.add("ATGCGC"); // Gene shorter than 9 characters
+        sr1.add("ATGCGCTAA"); // Gene with C-G ratio higher than 0.35
+        sr1.add("ATGCGCTAG"); // Gene with C-G ratio lower than 0.35
+        sr1.add("ATGCGCTAGCAG"); // Gene with C-G ratio higher than 0.35
+
+        StorageResource sr2 = new StorageResource();
+        sr2.add("ATGCGCTA"); // Gene shorter than 9 characters
+        sr2.add("ATGCGC"); // Gene shorter than 9 characters
+        sr2.add("ATGCGCTA"); // Gene with C-G ratio lower than 0.35
+        StorageResource sr = new StorageResource();
+
+        System.out.println("----------------------------------");
+        System.out.println("Test Case1:");
+        processGenes(sr1);
+        System.out.println("Test Case2:");
+        processGenes(sr2);
+    }
+
+    public void testProcessGenes() {
+        testProcessGenes("");
+    }
+}
