@@ -1,0 +1,40 @@
+import edu.duke.*;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.net.URLConnection;
+import java.io.InputStreamReader;
+
+public class Part4 {
+    public static void main(String[] args) {
+        Part4 p4 = new Part4();
+        p4.call();
+        }
+    public void call()
+    {
+        try{
+            URL url = new URL("https://www.dukelearntoprogram.com/course2/data/manylinks.html");
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line="";
+            while ((line = bufferedReader.readLine()) != null)
+            {
+            
+                if(line.contains("youtube.com") == true)
+                {
+                     int index = line.indexOf("youtube.com");
+                     int leftQuoteIndex = line.indexOf("http");
+                     int rightQuoteIndex = line.indexOf('"', index + "youtube.com".length());
+            
+                String youtubeURL = line.substring(leftQuoteIndex, rightQuoteIndex);
+                System.out.println("Found Youtube URL: " + youtubeURL);
+                
+                }
+            
+            }
+        }
+        catch(Exception e)
+        {
+               e.printStackTrace();
+        }
+    }
+}
