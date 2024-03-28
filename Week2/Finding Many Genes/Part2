@@ -1,0 +1,20 @@
+
+public class Part2 {
+    public int howMany(String stringa , String stringb)
+    {
+        int count =0;
+        while(stringb.indexOf(stringa)!= -1)
+        {
+            int start= stringb.indexOf(stringa);
+            count++;
+            stringb = stringb.substring(start+stringa.length(),stringb.length());
+        }
+        
+        return count;
+    }
+    public void testHowMany()
+    {
+        System.out.println(howMany("GAA","ATGAACGAATTGAATC"));
+        System.out.println(howMany("AA", "ATAAAA"));
+    }
+}
