@@ -1,0 +1,45 @@
+
+/**
+ * Write a description of Part1 here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+public class Part1 {
+    public String findSimpleGene(String dna)
+    {
+         int start = dna.indexOf("ATG");
+         System.out.println("start = " +start);
+         if(start == -1)
+         {
+             return "";
+         }
+         int stop = dna.indexOf("TAA");
+         System.out.println("stop = " +stop);
+         if(stop == -1)
+         {
+             return "";
+         }
+         
+         if(((stop-(start+2))%3)== 0)
+         {
+             return dna.substring(start,stop+3);
+         }
+          return "";
+    }
+   public void testSimpleGene()
+   {
+       String s1 = "OOPPATAA";
+       String s2 = "ATGOOPPA";
+       String s3 = "OOPPATPC";
+       String s4 = "ATGTAGGTTAATATAA";
+       String s5 = "ATGTAGGTAATAA";
+       
+       System.out.println("DNA = " +findSimpleGene(s4));
+   }
+   public static void main (String[] args) {
+        Part1 p1 = new Part1();
+        p1.testSimpleGene();
+    }
+}
