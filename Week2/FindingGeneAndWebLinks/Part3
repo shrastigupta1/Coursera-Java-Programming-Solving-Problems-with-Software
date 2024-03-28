@@ -1,0 +1,64 @@
+
+/*** Part 3: Problem Solving with Strings
+This assignment will provide practice with String methods. You'll write two methods to solve problems with strings and another to test them. Do the following:
+
+Create a Java Class named Part3 in the StringsFirstAssignments project. Implement the following methods:
+Write twoOccurrences, which returns true if stringa appears at least twice in stringb; otherwise, false. For example, twoOccurrences("by", "A story by Abby Long") returns true as there are two occurrences of "by".
+Implement testing, a void method that tests twoOccurrences on various pairs of strings and prints the result (true or false) for each pair.
+Write lastPart, which finds the first occurrence of stringa in stringb and returns the part of stringb that follows stringa. If stringa does not occur in stringb, return stringb. For example, lastPart("an", "banana") returns "ana".
+Update testing to call lastPart with several pairs of strings. Print the strings passed in and the result. For example:
+The part of the string after an in banana is ana.
+
+ * @author - Shrasti Gupta 
+ * @version (a version number or a date)
+ */
+public class Part3 {
+    public boolean twoOccurrences(String stringa,String stringb)
+    {
+        int f = stringb.indexOf(stringa);
+        System.out.println("first index"+f);
+        if(f == -1)
+        {
+            return false;
+        }
+        else{
+            if(stringb.indexOf(stringa,f+1) != -1)
+            {
+                System.out.println("sec index"+stringb.indexOf(stringa,f+1));
+                return true;
+            }
+        }
+        return false;
+    }
+    public String lastPart(String stringa,String stringb)
+    {
+        int f = stringb.indexOf(stringa); // b, ababan 012  --1
+        if(f == -1)
+        {
+            return stringb;
+        }
+        else{
+            if(stringb.indexOf(stringa,f+1) != -1) 
+            {
+                
+                return stringb.substring(stringb.indexOf(stringa,f+1),stringb.length());
+            }
+        }
+        return stringb;
+    }
+    public void testing()
+    {
+        System.out.println("-------------------");
+        String a = "by" ;
+        String b = "A story by Abby Long";
+        System.out.println(twoOccurrences(a,b));
+        System.out.println(lastPart("an","banana"));
+        System.out.println(lastPart("zoo", "forest")) ;
+    }
+    public static void main(String[] args)
+    {
+        Part3 p3 = new Part3();
+        p3.testing();
+    }
+
+}
