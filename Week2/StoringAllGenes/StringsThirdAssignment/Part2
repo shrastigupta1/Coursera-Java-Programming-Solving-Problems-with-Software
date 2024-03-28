@@ -1,0 +1,24 @@
+public class Part2 {
+    
+    public float cgRatio(String dna)
+    {
+        int len = dna.length();
+        int cg=0;
+        
+        for(int i=0; i<len;i++)
+        {
+        if(dna.charAt(i) == 'C' || dna.charAt(i) == 'G')
+        {
+           cg++;
+        }
+        }
+        float cg_ratio = (float)cg/len;
+        return cg_ratio;
+    }
+    
+    public void print()
+    {
+        System.out.println(cgRatio("ATGCCATAG"));
+    }
+
+}
