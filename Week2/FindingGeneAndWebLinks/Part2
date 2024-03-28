@@ -1,0 +1,56 @@
+
+/**
+ * Write a description of Part1 here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+public class Part2 {
+    public String findSimpleGene(String dna,int startcodon, int stopcodon)
+    {
+                  
+         System.out.println("start = " +startcodon);
+         if(startcodon == -1)
+         {
+             return "";
+         }
+         System.out.println("stopcodon = " +stopcodon);
+         if(stopcodon == -1)
+         {
+             return "";
+         }
+         
+         if(((stopcodon-(startcodon+2))%3)== 0)
+         {
+             return dna.substring(startcodon,stopcodon+3);
+         }
+          return "";
+    }
+   public void testSimpleGene()
+   {
+       String s1 = "OOPPATAA";
+       String s2 = "ATGOOPPA";
+       String s3 = "OOPPATPC";
+       String s6 = "ATGTAGGTTAATATAA";
+       String s4 = "atgtaggttaatataa";
+       String s5 = "ATGTAGGTAATAA";
+       
+       String dna = s4;
+       if(dna.equals(dna.toLowerCase()))
+         {
+             dna = dna.toLowerCase();
+           System.out.println("DNA = " +findSimpleGene(dna,dna.indexOf("atg"),dna.indexOf("taa"))); 
+         }
+         else
+         {
+             System.out.println("DNA = " +findSimpleGene(dna,dna.indexOf("ATG"),dna.indexOf("TAA")));
+         }
+       
+   }
+   public static void main (String[] args) {
+        Part2 p1 = new Part2();
+        p1.testSimpleGene();
+    }
+}
+
