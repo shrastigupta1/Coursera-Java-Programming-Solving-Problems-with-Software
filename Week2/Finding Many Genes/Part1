@@ -1,0 +1,68 @@
+import edu.duke.*;
+import java.io.File;
+
+public class Part1 {
+    
+    // Finds the index of the first occurrence of a stop codon in the given DNA strand
+    // starting from the given index 'startIndex'.
+    // Returns the index of the stop codon if found and the codon is in the correct reading frame,
+    // otherwise returns -1.
+    public int findStopCodon(String dna, int startIndex, String stopCodon) {
+        int stopIndex = dna.indexOf(stopCodon, startIndex);
+        if ((stopIndex != -1) && (((stopIndex - (startIndex + 3)) % 3 == 0))) {
+            return stopIndex;
+        } else {
+            return -1;
+        }
+    }
+    
+    // Finds the gene in the given DNA strand starting from the given index 'where'.
+    // Returns the gene if found, otherwise returns an empty string.
+    public String findGene(String dna, int where) {
+        int startCodon = dna.indexOf("ATG", where);
+        if (startCodon == -1) {
+            return "";
+        }
+
+        int stopCodonTAA = findStopCodon(dna, startCodon, "TAA");
+        int stopCodonTGA = findStopCodon(dna, startCodon, "TGA");
+        int stopCodonTAG = findStopCodon(dna, startCodon, "TAG");
+        int min;
+        if (stopCodonTGA == -1 || (stopCodonTAA < stopCodonTGA && stopCodonTAA != -1)) {
+            min = stopCodonTAA;
+        } else {
+            min = stopCodonTGA;
+        }
+        if (min == -1 || (stopCodonTAG < min && stopCodonTAG != -1)) {
+            min = stopCodonTAG;
+        }
+        if (min == -1) {
+            return "";
+        }
+        return dna.substring(startCodon, min + 3);
+    }
+    
+    // Test the findGene method
+    public void testFindGene() {
+        String Dna1 = "AATGCTAACTAGCTGACTAAT";
+        System.out.println(findGene(Dna1, 0));
+    }
+    
+    // Prints all the genes in the given DNA strand
+    public void printAllGenes(String dna) {
+        int startIndex = 0;
+        while (true) {
+            String curr = findGene(dna, startIndex);
+            System.out.println(curr);
+            if (curr.isEmpty()) {
+                break;
+            }
+            startIndex = dna.indexOf(curr, startIndex) + curr.length();
+        }
+    }
+    
+    // Example method call
+    public void print() {
+        printAllGenes("BATGGTAADATGATAACDTAGCCATGTGA");
+    }
+}
