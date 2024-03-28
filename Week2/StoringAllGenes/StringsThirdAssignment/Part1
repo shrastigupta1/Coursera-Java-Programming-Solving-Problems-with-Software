@@ -1,0 +1,77 @@
+import edu.duke.*;
+import java.io.File;
+public class Part1 {
+    public int findStopCodon(String dna, int startIndex, String stopCodon)
+    {int stopIndex = dna.indexOf(stopCodon, startIndex);
+        if((stopIndex != -1) && (((stopIndex-(startIndex+3))%3 == 0)))
+        {
+             return stopIndex;
+        }
+        else
+        {
+            return -1;
+        }
+       
+    }
+    public String findGene(String dna, int where)
+    {
+        int startCodon = dna.indexOf("ATG",where);
+        if(startCodon == -1){
+            return "";
+        }
+
+        int stopCodonTAA = findStopCodon(dna,startCodon,"TAA");
+        int stopCodonTGA = findStopCodon(dna,startCodon,"TGA");
+        int stopCodonTAG = findStopCodon(dna,startCodon,"TAG");
+        int min;
+        if( stopCodonTGA == -1 || (stopCodonTAA < stopCodonTGA && stopCodonTAA!=-1))
+        {
+            min = stopCodonTAA;
+        }
+        else
+        {
+            min = stopCodonTGA;
+        }
+        if( min == -1 || (stopCodonTAG < min && stopCodonTAG!=-1))
+        {
+            min = stopCodonTAG;
+        }
+        if(min== -1)
+        {
+            return "";
+        }
+        return dna.substring(startCodon,min+3);
+    }
+    
+    public void testFindGene()
+    {
+        String Dna1 = "AATGCTAACTAGCTGACTAAT";
+        System.out.println(findGene(Dna1,0));
+           
+    }
+    public StorageResource getAllGenes(String dna)
+    {
+        StorageResource genes = new StorageResource();
+        int startIndex = 0;
+        while(true)
+        {
+            String curr = findGene(dna,startIndex);
+            genes.add(curr);
+            if(curr.isEmpty())
+            {
+                break;
+            }
+            
+            startIndex = dna.indexOf(curr,startIndex)+curr.length();
+        }
+        return genes;
+    }
+    public void print()
+    {
+    StorageResource genes = getAllGenes("BATGGTAADATGATAACDTAGCCATGTGA"); 
+    for(String s : genes.data())
+    {
+        System.out.println(s);
+    }
+    }
+}
