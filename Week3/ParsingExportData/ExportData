@@ -1,0 +1,65 @@
+
+/**
+ * Write a description of ExportData here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+import org.apache.commons.csv.*;
+public class ExportData {
+    public String countryInfo(CSVParser parser, String country)
+    {
+        for(CSVRecord record : parser)
+        {
+            String country1 = record.get("Country");
+            if(country1.contains(country))
+            {
+            String export = record.get("Exports");
+            String value = record.get("Value (dollars)"); 
+            return country + ": " + export + ": " + value;
+            }
+            
+        }
+        
+        return "Not Found";
+    }
+   public void listExportersTwoProducts(CSVParser parser, String exportItem1, String exportItem2)
+    {
+        for(CSVRecord record : parser)
+        {
+            String export = record.get("Exports");
+            if(export.contains(exportItem1) && export.contains(exportItem2))
+            {
+             System.out.println(record.get("Country"));
+            }
+            
+        }
+    }
+    public void bigExporters(CSVParser parser1, String amount)
+    {
+        for(CSVRecord record : parser1)
+        {
+            String value = record.get("Value (dollars)"); 
+            String export = record.get("Exports");
+            if(value.length() > amount.length())
+            {
+               System.out.println(record.get("Country")+""+record.get("Value (dollars)"));
+            }
+        }
+    }
+    public void tester()
+    {
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        String info = countryInfo(parser,"Germany");
+        System.out.println("Information about the country: ");
+        System.out.println(info);
+        System.out.println("List of countries that have both gold and diamond: ");
+        listExportersTwoProducts(parser,"gold","diamond");
+        CSVParser parser1 = fr.getCSVParser();
+        System.out.println("List of countries whose value is greater than $999,999,999: ");
+        bigExporters(parser1,"$999,999,999");
+    }
+
+}
